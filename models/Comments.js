@@ -14,7 +14,7 @@ Comment.init({
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-            notempty: {
+            notEmpty: {
             msg: 'The comment cannot be empty.'
             }
         }
