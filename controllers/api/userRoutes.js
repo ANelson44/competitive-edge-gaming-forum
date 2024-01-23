@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { User } = require("../models");
-const withAuth = require("../utils/auth");
+const { User } = require("../../models");
+const withAuth = require("../../utils/auth");
 const bcrypt = require("bcrypt");
 
-// Get all users
+//* Get all users
 router.get("/", async (req, res) => {
     try {
         const users = await User.findAll();
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Get user by ID
+//* Get user by ID
 router.get("/:id", async (req, res) => {
     try {
         const user = await User.findByPk(req.params.id);
@@ -30,28 +30,48 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Create new User
-router.post("/", async (req, res) => {
+//* Create new User (User Registration)
+router.post("/signup", async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({
-            username,
-            password: hashedPassword,
-        });
-
-        req.session.save(() => {
-            req.session.user_id = newUser.id;
-            req.session.logged_in = true;
-
-            res.status(200).json(newUser);
-        });
+      const { username, password } = req.body;
+  
+      // Validate input (add more conditions as needed)
+      if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+      }
+  
+      // Check if the username is already taken
+      const existingUser = await User.findOne({
+        where: { username: username },
+      });
+  
+      if (existingUser) {
+        return res.status(400).json({ error: "Username already taken" });
+      }
+  
+      // Hash the password before saving it to the database
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Create a new user
+      const newUser = await User.create({
+        username,
+        password: hashedPassword,
+      });
+  
+      // Save user information in the session
+      req.session.save(() => {
+        req.session.user_id = newUser.id;
+        req.session.logged_in = true;
+  
+        res.status(200).json(newUser);
+      });
     } catch (err) {
-        res.status(400).json(err);
-        console.log(err);
-    };
-});
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
 
-// Delete a User
+//* Delete a User
 router.delete("/:id", withAuth, async (req, res) => {
     try {
         const deletedUser = await User.destroy(req.params.id);
@@ -66,7 +86,7 @@ router.delete("/:id", withAuth, async (req, res) => {
     };
 });
 
-// Login
+//* Login
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -95,7 +115,7 @@ router.post("/login", async (req, res) => {
     };
 });
 
-// Logout
+//* Logout
 router.post("/logout", async (req, res) => {
     req.session.destroy((err) => {
         if (err) {

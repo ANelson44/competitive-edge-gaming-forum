@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const { Games } = require("../models");
+const { Game } = require("../../models");
 
-// get all games
+//* get all games
 router.get("/", async (req, res) => {
   try {
-    const gameData = await Games.findAll({
-      attributes: ["id", "title"],
+    const gameData = await Game.findAll({
+      attributes: ["id", "name"],
     });
     res.status(200).json(gameData);
   } catch (err) {
@@ -13,11 +13,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-// get a game by ID
+//* get a game by ID
 router.get("/:id", async (req, res) => {
   try {
-    const gameData = await Games.findByPk(req.params.id, {
-      attributes: ["id", "title"],
+    const gameData = await Game.findByPk(req.params.id, {
+      attributes: ["id", "name"],
     });
 
     if (!game) {
