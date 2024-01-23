@@ -17,7 +17,7 @@ module.exports = {
             const hours = Math.floor(time / (1000 *60 * 60));
             return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
         } else {
-            return 'on ' + date.toLocalDateString();
+            return 'on ' + date.toLocaleDateString();
         }
     },
 
