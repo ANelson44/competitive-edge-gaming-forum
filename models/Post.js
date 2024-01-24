@@ -34,6 +34,13 @@ Post.init({
             model: 'User',
             key: 'id',
         }
+    },
+    gameId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'Game',
+            key: 'id',
+        }
     }
 }, {
     sequelize,
@@ -41,5 +48,10 @@ Post.init({
     freezeTableName: true,
     timestamps: true,
 });
+
+// Post.associate = (models) => {
+//     Post.belongsTo(models.User, { foreignKey: 'userId' });
+//     Post.belongsTo(models.Game, { foreignKey: 'gameId' });
+// };
 
 module.exports = Post;

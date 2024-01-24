@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Tag } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 //* get all tags
 router.get("/", async (req, res) => {
