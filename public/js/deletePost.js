@@ -13,4 +13,6 @@ const deleteHandler = async () => {
     }
 };
 
+if (deleteBtn){
 document.addEventListener('click', deleteHandler)
+};

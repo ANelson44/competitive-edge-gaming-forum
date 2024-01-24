@@ -1,11 +1,11 @@
 const loginForm = async (event) => {
     event.preventDefault();
 //  querys must be matched to actual name
-    const username = document.querySelector('#usernameLogin');
-    const password = document.querySelector('#passwordLogin');
+    const username = document.querySelector('#usernameLogin').value;
+    const password = document.querySelector('#passwordLogin').value;
 
     const response = await fetch('/api/User/login', {
-        method: Post,
+        method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
     });
