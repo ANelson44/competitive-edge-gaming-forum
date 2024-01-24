@@ -74,7 +74,11 @@ router.post("/signup", async (req, res) => {
 //* Delete a User
 router.delete("/:id", withAuth, async (req, res) => {
     try {
-        const deletedUser = await User.destroy(req.params.id);
+        const deletedUser = await User.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
 
         if (!deletedUser) {
             res.status(404).json({ error: "User not found" });

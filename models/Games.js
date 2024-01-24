@@ -16,7 +16,7 @@ Game.init ({
     },
     genreId: {
         type: DataTypes.INTEGER,
-        allowNull: false, 
+        allowNull: true, 
         references:{
             model: 'Genre',
             key: 'id',

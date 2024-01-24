@@ -1,11 +1,16 @@
-const seedCod = require('./seeds/cod/seeds-cod');
-const seedEldenRing = require('./seeds/elden-ring/seeds-er');
+const seedCod = require('./cod/seeds-cod');
+const seedEldenRing = require('./elden-ring/seeds-er');
 const seedLeague = require('./league/seeds-league');
-const seedTarkov = require('./seeds/tarkov/seeds-tarkov');
-const seedValorant = require('./seeds/valorant/seeds-valorant');
+const seedTarkov = require('./tarkov/seeds-tark');
+const seedValorant = require('./valorant/seeds-val');
+
+const sequelize = require('../config/connection');
 
 const seedAllGames = async () => {
     console.log('Seeding COD');
+
+    await sequelize.sync({ force: true });
+
     await seedCod();
 
     console.log('Seeding Elden Ring');

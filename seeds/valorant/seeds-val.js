@@ -3,8 +3,8 @@ const { User, Post, Game } = require('../../models');
 const seedValorant = async () => {
     // seed users
     const users = await User.bulkCreate([
-        { username: 'User1', email: 'User1@example.com', password: 'password1'},
-        { username: 'User2', email: 'User2@example.com', password: 'password2'},
+        { username: 'User9', email: 'User9@example.com', password: 'password1'},
+        { username: 'User10', email: 'User10@example.com', password: 'password2'},
     ]);
 
     // seed game
@@ -23,7 +23,7 @@ const seedValorant = async () => {
             title: 'Favorite agent',
             content: 'Which is your favorite agent?',
             user_id: users[1].id,
-            game_id: eldenRing.id,
+            game_id: valorant.id,
         },
     ]);
 
