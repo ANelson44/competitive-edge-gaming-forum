@@ -3,8 +3,8 @@ const { User, Post, Game } = require('../../models');
 const seedTarkov = async () => {
     // seed users
     const users = await User.bulkCreate([
-        { username: 'User1', email: 'User1@example.com', password: 'password1'},
-        { username: 'User2', email: 'User2@example.com', password: 'password2'},
+        { username: 'User7', email: 'User7@example.com', password: 'password1'},
+        { username: 'User8', email: 'User8@example.com', password: 'password2'},
     ]);
 
     // seed game

@@ -15,6 +15,10 @@ User.hasMany(Post, {
 
 Post.belongsTo(User, {
     foreignKey: 'userId'
+});
+
+Post.belongsTo(Game, {
+    foreignKey: 'gameId'
 })
 
 // User-Comment
