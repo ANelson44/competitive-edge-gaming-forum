@@ -13,22 +13,22 @@ const seedLeague = async () => {
     //seed example posts
     const posts = await Post.bulkCreate([
         {
-            title: 'Favorite legend',
-            content: 'Which is your favorite legend?',
+            title: 'Favorite champion',
+            content: 'Which is your favorite champion?',
             user_id: users[0].id,
             game_id: leagueOfLegends.id,
         },
 
         {
-            title: 'Favorite attacker',
-            content: 'Which legend is your favorite attacker?',
+            title: 'Favorite gamemode',
+            content: 'Which gamemode is your favorite?',
             user_id: users[1].id,
             game_id: leagueOfLegends.id,
         },
 
         {
-            title: 'Favorite tank',
-            content: 'Which legend is your favorite tank?',
+            title: 'Favorite team',
+            content: 'Which LOL esports team is your favorite?',
             user_id: users[1].id,
             game_id: leagueOfLegends.id,
         },
