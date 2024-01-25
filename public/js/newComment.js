@@ -13,6 +13,12 @@ const newCommentForm = async (event) => {
             }),
             headers: { 'Content-Type': 'application/json'}
         });
+
+        if (response.ok) {
+            dovument.location.replace('/')
+        } else {
+            alert('Failed to make a new comment.')
+        }
     }
 }
 
