@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     // Find all games with associated names
 const gamesData = await Game.findAll({
-  include: [{ model: Game, attributes: ["name"] }],
+
 });
 
 const games = gamesData.map((game) => game.get({ plain: true }));
@@ -140,5 +140,4 @@ router.get("/editpost/:id", async (req, res) => {
 
 // Add more routes if needed
 
-// render homep
 module.exports = router;
