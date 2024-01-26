@@ -97,25 +97,31 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
-            res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ error: "User not found" });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = user.checkPassword(password)
+        // await bcrypt.compare(password, user.password);
+        console.log('Entered password:', password);
+        console.log('Hashed password from DB:', user.password);
+        console.log("isPasswordValid:", isPasswordValid);
 
         if (!isPasswordValid) {
-            res.status(401).json({ error: "Invalid Username or Password"});
+            console.error("Invalid Password");
+            return res.status(401).json({ error: "Invalid Username or Password"});
         }
 
-        req.session.user = {
-            id: user.id,
-            username: user.username,
-            password: user.password,
-        };
+        req.session.userId = user.id
+        // {
+        //     id: user.id,
+        //     username: user.username,
+        //     // password: user.password,
+        // };
 
-        res.status(200).json({ message: "Login Successful", user });
+        return res.status(200).json({ message: "Login Successful", user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).json({ error: "Internal Server Error" });
     };
 });
 

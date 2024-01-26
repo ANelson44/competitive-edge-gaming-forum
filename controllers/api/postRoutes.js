@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post } = require("../../models");
+const { Post, User } = require("../../models");
 const withAuth = require("../../utils/auth");
 
 //* Get all posts by username
@@ -14,15 +14,39 @@ router.get("/", async (req, res) => {
   }
 });
 
+//* Get post by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [{ model: User, attributes: ["username"] }],
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: "No post found with this id!" });
+      return;
+    }
+
+    res.status(200).json(postData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //* Create post
 router.post("/", withAuth, async (req, res) => {
+  // Check if the user is logged in
+  if (!req.session.userId) {
+    return res.status(401).json({ error: "User not logged in" });
+  }
+
   try {
     const newPost = await Post.create({
       ...req.body,
-      user_id: req.session.user_id,
+      userId: req.session.userId,
     });
 
-    res.status(200).json(newPost, {message: "Post created!"});
+
+    res.status(200).json({ message: "Post created!", newPost });
   } catch (err) {
     res.status(400).json(err);
   }
@@ -51,7 +75,7 @@ router.delete("/:id", withAuth, async (req, res) => {
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
-        user_id: req.session.user_id,
+        userId: req.session.userId,
       },
     });
 

@@ -15,22 +15,22 @@ const seedTarkov = async () => {
         {
             title: 'Favorite map',
             content: 'Which is your favorite map?',
-            user_id: users[0].id,
-            game_id: tarkov.id,
+            userId: users[0].id,
+            gameId: tarkov.id,
         },
 
         {
             title: 'Thoughts on wipe',
             content: 'What are your thoughts on the changes this wipe?',
-            user_id: users[1].id,
-            game_id: tarkov.id,
+            userId: users[1].id,
+            gameId: tarkov.id,
         },
 
         {
             title: 'Arena thoughts',
             content: 'What are your thoughts on Arena?',
-            user_id: users[0].id,
-            game_id: tarkov.id,
+            userId: users[0].id,
+            gameId: tarkov.id,
         },
     ]);
 

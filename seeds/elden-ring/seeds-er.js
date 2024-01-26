@@ -15,22 +15,22 @@ const seedEldenRing = async () => {
         {
             title: 'Thoughts on Elden ring',
             content: 'What are your thoughts on Elden Ring?',
-            user_id: users[0].id,
-            game_id: eldenRing.id,
+            userId: users[0].id,
+            gameId: eldenRing.id,
         },
 
         {
             title: 'Favorite weapon',
             content: 'Which is your favorite weapon, spell or incantation?',
-            user_id: users[1].id,
-            game_id: eldenRing.id,
+            userId: users[1].id,
+            gameId: eldenRing.id,
         },
 
         {
             title: 'Favorite area/ boss',
             content: 'Which is your favorite region or boss?',
-            user_id: users[0].id,
-            game_id: eldenRing.id,
+            userId: users[0].id,
+            gameId: eldenRing.id,
         }
     ]);
 

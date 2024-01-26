@@ -5,11 +5,13 @@ const router = express.Router();
 
 // Create a new comment
 router.post("/", withAuth, async (req, res) => {
-    try {    
+    try {  
+      console.log('User ID in session:', req.session.userId);  
       const newComment = await Comment.create({
         ...req.body,
-        user_id: req.session.user_id,
+        userId: req.session.userId,
       });
+      
       // Send a response with the new comment data
       res.status(200).json(newComment);
     } catch (err) {
