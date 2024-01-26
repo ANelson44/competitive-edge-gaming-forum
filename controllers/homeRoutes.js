@@ -134,4 +134,5 @@ router.get("/editpost/:id", async (req, res) => {
 
 // Add more routes if needed
 
+// render homep
 module.exports = router;
