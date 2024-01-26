@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const { Game, User, Post, Genre } = require('../models');
+const { Game, User, Post, Genre, Comment } = require('../models');
 const withAuth = require("../utils/auth");
 
 //* Route to render homepage
 router.get('/', async (req, res) => {
   try {
-    // Find all games with associated genres
+    // Find all games with associated names
 const gamesData = await Game.findAll({
-  include: [{ model: Genre, attributes: ["name"] }],
+
 });
 
 const games = gamesData.map((game) => game.get({ plain: true }));
@@ -20,10 +20,8 @@ const games = gamesData.map((game) => game.get({ plain: true }));
 //* Route to render individual game page with all posts
 router.get("/game/:id", withAuth, async (req, res) => {
   try {
-    // Find game by ID with associated username and comments with associated usernames
-    const gameData = await Game.findByPk(req.params.id, {
-      include: [{ model: Genre, attributes: ["name"] }],
-    });
+    // Find game by ID with associated name and posts with associated usernames
+    const gameData = await Game.findByPk(req.params.id,); 
 
     // Convert game data to plain JavaScript object
     const game = gameData.get({ plain: true });
@@ -36,6 +34,9 @@ router.get("/game/:id", withAuth, async (req, res) => {
 
       const posts = postsData.map(post => post.get({ plain: true }));
 
+      // Respond with JSON data (USED FOR INSOMNIA TESTING)
+      res.json({ game, posts });
+
       // Render game template with game data and posts data
       res.render("game", {
         game,
@@ -43,10 +44,12 @@ router.get("/game/:id", withAuth, async (req, res) => {
       });
     } catch (err) {
       // If there is an error, return 500 status code and error message
+      console.log(err);
       res.status(500).json(err);
     }
   } catch (err) {
     // If there is an error, return 500 status code and error message
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -70,14 +73,17 @@ router.get("/post/:id", withAuth, async (req, res) => {
     // Convert post data to plain JavaScript object
     const post = postData.get({ plain: true });
 
+     // Respond with JSON data (FOR INSOMNIA TESTING)
+     res.json({ post });
+
     // Render post template with post data
-    res.render("post", {
-      post,
-    });
+    // res.render("post", {
+    //   post,
+    // });
   } catch (err) {
     // If there is an error, return 500 status code and error message
     console.error(err);
-    res.status(500).json(err);
+    res.status(500).json({ error: "Internal Server Error"});
   }
 });
 

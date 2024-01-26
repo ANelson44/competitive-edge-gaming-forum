@@ -45,13 +45,9 @@ Post.init({
 }, {
     sequelize,
     modelName: 'Post',
+    tableName: 'Post',
     freezeTableName: true,
     timestamps: true,
 });
-
-// Post.associate = (models) => {
-//     Post.belongsTo(models.User, { foreignKey: 'userId' });
-//     Post.belongsTo(models.Game, { foreignKey: 'gameId' });
-// };
 
 module.exports = Post;

@@ -15,15 +15,15 @@ const seedCod = async () => {
         {
             title: 'Favorite Call of Duty?',
             content: 'Which of the Call of Duty games has been your favorite?',
-            user_id: users[0].id,
-            game_id: callOfDuty.id,
+            userId: users[0].id,
+            gameId: callOfDuty.id,
         },
 
         {
             title: 'Best Warzone loadout',
             content: 'What is the best loadout in Warzone in your opinion?',
-            user_id: users[1].id,
-            game_id: callOfDuty.id,
+            userId: users[1].id,
+            gameId: callOfDuty.id,
         },
     ]);
 
