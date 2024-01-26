@@ -15,22 +15,22 @@ const seedLeague = async () => {
         {
             title: 'Favorite legend',
             content: 'Which is your favorite legend?',
-            user_id: users[0].id,
-            game_id: leagueOfLegends.id,
+            userId: users[0].id,
+            gameId: leagueOfLegends.id,
         },
 
         {
             title: 'Favorite attacker',
             content: 'Which legend is your favorite attacker?',
-            user_id: users[1].id,
-            game_id: leagueOfLegends.id,
+            userId: users[1].id,
+            gameId: leagueOfLegends.id,
         },
 
         {
             title: 'Favorite tank',
             content: 'Which legend is your favorite tank?',
-            user_id: users[1].id,
-            game_id: leagueOfLegends.id,
+            userId: users[1].id,
+            gameId: leagueOfLegends.id,
         },
     ]);
 

@@ -1,15 +1,11 @@
 const withAuth = (req, res, next) => {
-
-    // if not logged in can view only
-    if (!req.session.logged_in) {
-        res.locals.canPost = false;
-        
+    if (!req.session.userId) {
+      res.locals.canPost = false;
     } else {
-        // only allow post if logged in
-        res.locals.canPost = true;
+      res.locals.canPost = true;
     }
-
+  
     next();
-}
-
-module.exports = withAuth;
+  };
+  
+  module.exports = withAuth;

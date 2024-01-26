@@ -15,15 +15,15 @@ const seedValorant = async () => {
         {
             title: 'Favorite map',
             content: 'Which is your favorite map?',
-            user_id: users[0].id,
-            game_id: valorant.id,
+            userId: users[0].id,
+            gameId: valorant.id,
         },
 
         {
             title: 'Favorite agent',
             content: 'Which is your favorite agent?',
-            user_id: users[1].id,
-            game_id: valorant.id,
+            userId: users[1].id,
+            gameId: valorant.id,
         },
     ]);
 

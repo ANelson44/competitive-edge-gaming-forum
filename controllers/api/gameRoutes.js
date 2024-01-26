@@ -20,7 +20,9 @@ router.get("/:id", async (req, res) => {
       attributes: ["id", "name"],
     });
 
-    if (!game) {
+    res.status(200).json(gameData);
+
+    if (!gameData) {
       res.status(404).json({ message: "Game not Found" });
     }
   } catch (err) {
