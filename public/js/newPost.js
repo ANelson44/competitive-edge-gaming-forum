@@ -13,7 +13,7 @@ const newPostForm =async (event) => {
         });
 
         if (response.ok) {
-            dovument.location.replace('/')
+            document.location.replace('/')
         } else {
             alert('Failed to make a new post.')
         }
