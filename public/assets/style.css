@@ -1,59 +1,59 @@
-*{
+/* *{
 margin: 0;
 padding: 0;
 font-family: 'Roboto', sans-serif;
-}
+} */
 
 
-.container {
+/* .container {
 width: 100%;
 height: 100vh;
-background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(Images/background.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(../Images/background.jpg);
 background-position: center;
 background-size: cover;
 padding-left: 8%;
 padding-right: 8%;
 box-sizing: border-box;
-}
+} */
 
-
-.navbar{
+/* .navbar{
+color: #fff;
 height: 12%;
 display: flex;
 align-items: center;  
-}
+} */
 
 
-nav{
+/* nav{
 flex: 1;
 text-align: right;
-}
+} */
 
 
-nav ul li{
+/* nav ul li{
 list-style: none;
 display: inline-block;
 margin-left: 60px;
-}
+} */
 
 
-nav ul li a{
+/* nav ul li a{
 text-decoration: none;
 color: #fff;
 font-size: 18px;
-}
+} */
 
 
-.row{
+/* .row{
 display: flex;
 height: 88%;
 align-items: center;
-}
+} */
 
 
-.col {
+/* .col {
 flex-basis: 50%;
-}
+} */
 
 
 h1{
@@ -69,7 +69,7 @@ line-height: 15px;
 }
 
 
-button{
+/* button{
 width: 150px;
 color: #000;
 font-size: 18px;
@@ -79,10 +79,10 @@ border: 0;
 border-radius: 20px;
 outline: none;
 margin-top: 30px;
-}
+} */
 
 .card {
-width: 200px;
+width: 100%;
 height: 200px;
 display: inline-block;
 border-radius: 20px;
@@ -95,19 +95,21 @@ background-position: center;
 background-size: cover;
 border: 3px solid  #fff;
 -webkit-filter: brightness(100%);
+filter: brightness(100%);
 }
 
 
 .middle{
-width: 440px;
-height: 100px;
+width: 100%;
+height: 200px;
 display: inline-block;
 border-radius: 20px;
 padding: 15px 25px;
 box-sizing: border-box;
 cursor: pointer;
+text-align: center;
 margin: 10px 15px;
-background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(Images/tarkov.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(/Images/tarkov.jpg);
 background-position: cover;
 background-size: cover;
 border: 3px solid  #fff;
@@ -116,21 +118,22 @@ transition: transform 0.5s;
 
 
 .card1 {
-background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Images/league.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(/Images/league.jpg);
 }
 .card2 {
-background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Images/elden-ring.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(/Images/elden-ring.jpg);
 }
 .card3 {
-background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Images/cod.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(/Images/cod.jpg);
 }
 .card4 {
-background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Images/valorant.jpg);
+background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(/Images/valorant.jpg);
 }
 
 .card:hover {
     transform: translateY(-10px);
     -webkit-filter: brightness(70%);
+    filter: brightness(70%);
     -webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
@@ -138,15 +141,14 @@ background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Images/v
     transition: all 1s ease;
 }
 
-h5 {
+ h5 {
     color: #fff;
     text-shadow:  0 0 5px #999;
     font-size: 20px;
     text-align: center;
 }
 
-.card p {
+/* .card p {
     text-shadow: 0 0 15px #000;
     font-size: 8px;
-}
-
+} */
