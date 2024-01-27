@@ -7,7 +7,7 @@ const deleteHandler = async () => {
         headers: { 'Content-Type': 'application/json'},
     });
     if(response.ok) {
-        document.location.replace('/');
+        document.location.replace('/homepage');
     } else {
         alert('Failed to delete.');
     }

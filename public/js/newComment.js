@@ -15,7 +15,7 @@ const newCommentForm = async (event) => {
         });
 
         if (response.ok) {
-            dovument.location.replace('/')
+            dovument.location.replace('/homepage')
         } else {
             alert('Failed to make a new comment.')
         }
