@@ -45,6 +45,8 @@ router.post("/", withAuth, async (req, res) => {
       userId: req.session.userId,
     });
 
+    const io = req.app.get('io');
+    io.emit('newPost', newPost)
 
     res.status(200).json({ message: "Post created!", newPost });
   } catch (err) {
@@ -63,6 +65,10 @@ router.put("/:id", withAuth, async (req, res) => {
       res.status(404).json({ message: "No post found with that id!" });
       return;
     }
+
+    const io = req.app.get('io');
+    io.emit('updatePost', { id: req.params.id, ...req.body});
+
     res.status(200).json({ message: "Post has been updated!" });
   } catch (err) {
     res.status(500).json(err);
@@ -83,6 +89,9 @@ router.delete("/:id", withAuth, async (req, res) => {
       res.status(404).json({ message: "No post found with this id!" });
       return;
     }
+
+    const io = req.app.get('io');
+    io.emit('deletePost', req.params.id);
 
     res.status(200).json(postData);
   } catch (err) {
