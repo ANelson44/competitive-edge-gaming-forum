@@ -1,6 +1,9 @@
+const socket = io();
+
 function displayPosts(selectedGame) {
     const postsContainer = document.getElementById('postsContainer');
     const gameTitle = document.getElementById('gameTitle');
+    
     // Check if the selected game has posts
     if (gamePosts[selectedGame]) {
       // Display game title
@@ -18,3 +21,15 @@ function displayPosts(selectedGame) {
   }
   // Call the displayPosts function with the selected game
   displayPosts(selectedGame);
+
+  socket.on('newPost', (newPost) =>{
+    if (!gamePosts[newPost.game]) {
+      gamePosts[newPost.game] =[]
+    }
+    
+    gamePosts[newPost.game].push(newPost);
+
+    if(selectedGame = newPost.game) {
+      displayPosts(selectedGame);
+    }
+  });
