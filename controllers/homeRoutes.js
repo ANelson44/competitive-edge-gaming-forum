@@ -8,7 +8,7 @@ const withAuth = require("../utils/auth");
 // });
 
 //* Route to render homepage
-router.get('/homepage', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     // Find all games with associated names
 const gamesData = await Game.findAll({
