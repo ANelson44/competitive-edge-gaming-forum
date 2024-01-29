@@ -14,8 +14,10 @@ const loginFormHandler = async (event) => {
       });
   
       console.log('Response Status:', response.status);
+      const responseData = await response.json();
 
       if (response.ok) {
+        console.log(responseData);
         document.location.replace('/');
       } else {
         alert(response.statusText);
