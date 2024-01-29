@@ -99,7 +99,7 @@ router.post("/login", async (req, res) => {
 
 
 
-        const isPasswordValid = await user.checkPassword(password)
+        const isPasswordValid = await userData.checkPassword(password)
 
         // await bcrypt.compare(password, user.password);
         console.log('Entered password:', password);
@@ -114,11 +114,11 @@ router.post("/login", async (req, res) => {
         req.session.save(() => {
 
 
-            req.session.user_id = user.id;
+            req.session.user_id = userData.id;
 
             req.session.logged_in = true;
             console.log('user logged in')
-            res.status(200).json({ message: "Login Successful", user });
+            res.status(200).json({ message: "Login Successful", userData });
         });
         
        
