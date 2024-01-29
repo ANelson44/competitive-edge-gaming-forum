@@ -1,9 +1,9 @@
 const withPostAuth = (req, res, next) => {
-    // if (!req.session.user_id) {
-    //   res.locals.canPost = false;
-    // } else {
-    //   res.locals.canPost = true;
-    // }
+    if (!req.session.user_id) {
+      res.locals.canPost = false;
+    } else {
+      res.locals.canPost = true;
+    }
   
     next();
   };
