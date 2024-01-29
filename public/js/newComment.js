@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function () {
+
+const showCommentForm = () => {
+    const commentFormContainer = document.getElementById('commentFormContainer');
+    commentFormContainer.style.display = 'block';
+};
+
 const newCommentForm = async (event) => {
     event.preventDefault();
 
@@ -5,7 +12,7 @@ const newCommentForm = async (event) => {
     const comment = document.querySelector('#newComment').value;
 
     if (comment) {
-        const response = await fetch('/api/Comment', {
+        const response = await fetch('/api/comments', {
             method: 'POST',
             body: JSON.stringify({
                 comment: comment,
@@ -15,11 +22,21 @@ const newCommentForm = async (event) => {
         });
 
         if (response.ok) {
-            dovument.location.replace('/homepage')
+            document.location.reload(); 
         } else {
             alert('Failed to make a new comment.')
         }
     }
 }
 
-document.querySelector('#commentForm').addEventListener('submit', newCommentForm);
+const newCommentButton = document.querySelector('#addCommentButton'); 
+if (newCommentButton) {
+    newCommentButton.addEventListener('click', showCommentForm);
+}
+
+const newComment = document.querySelector('#commentForm');
+if (newComment) {
+    newComment.addEventListener('submit', newCommentForm);
+}
+
+});

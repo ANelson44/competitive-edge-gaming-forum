@@ -1,27 +1,100 @@
-<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, inital-scale=1.0">
-        <title>Posts - {{ game:id }}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Post {{post.title}}</title>
+    <script>
+      const toggleCommentForm = () => {
+        console.log('Toggle Comment Form called');
+        const commentFormContainer = document.getElementById('commentFormContainer');
+        console.log(commentFormContainer);
+        commentFormContainer.style.display = 'block';
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container text-light">
+      <h2>{{post.title}}</h2>
+      <div class="post">
+        {{!-- <h2>{{ post.title }}</h2> --}}
+        <p>{{post.content}}</p>
+        <p>Posted by {{post.User.username}} on {{formatDate post.createdAt}}</p>
+      </div>
 
-    </head>
-    <body>
-        <div class="container">
-            <h1>Posts - {{ game:id }}</h1>
-            {{#if posts.length}}
-            <div class="post-list">
-                {{#each posts}}
-                <div class="post">
-                    <h2>{{ title }}</h2>
-                    <p>{{ content }}</p>
-                    <p>Posted by {{ user.username }} on {{ formatDate createdAt }}</p>
-                </div>
-                {{/each}}
+      <div id="commentFormContainer" style="display: none;">
+        <form id="commentForm">
+          <label for="comment" class="form-label">Add Comment:</label>
+            <textarea
+             id="newComment"
+             class="form-control"
+             rows="3"
+             placeholder="Add a comment..."
+            ></textarea>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <button id="addCommentButton" class="btn btn-success " onclick="toggleCommentForm()">Add a Comment</button>
+
+      {{#if post.Comments.length}}
+        <div class="comments">
+          <h2>Comments</h2>
+          {{#each post.Comments}}
+            <div class="comment">
+              <p>{{this.content}}</p>
+              <p>Comment by
+                {{this.User.username}}
+                on
+                {{formatDate this.createdAt}}</p>
             </div>
-            {{else}}
-            <p>No posts available for this game.</p>
-            {{/if}}
+          {{/each}}
         </div>
-    </body>
+      {{else}}
+        <p>No comments for this post.</p>
+      {{/if}}
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+const showCommentForm = () => {
+    const commentFormContainer = document.getElementById('commentFormContainer');
+    commentFormContainer.style.display = 'block';
+};
+
+const newCommentForm = async (event) => {
+    event.preventDefault();
+
+    const postId = document.querySelector('input[name="postId"]').value;
+    const comment = document.querySelector('#newComment').value;
+
+    if (comment) {
+        const response = await fetch('/api/comments', {
+            method: 'POST',
+            body: JSON.stringify({
+                comment: comment,
+                postId: postId,
+            }),
+            headers: { 'Content-Type': 'application/json'}
+        });
+
+        if (response.ok) {
+            document.location.reload(); 
+        } else {
+            alert('Failed to make a new comment.')
+        }
+    }
+}
+
+const newCommentButton = document.querySelector('#addCommentButton'); 
+if (newCommentButton) {
+    newCommentButton.addEventListener('click', showCommentForm);
+}
+
+const newComment = document.querySelector('#commentForm');
+if (newComment) {
+    newComment.addEventListener('submit', newCommentForm);
+}
+
+});
+    </script>
+  </body>
 </html>

@@ -1,3 +1,5 @@
+console.log('signup file loaded')
+
 const signupFormHandler = async (event) => {
     event.preventDefault();
   
@@ -8,20 +10,20 @@ const signupFormHandler = async (event) => {
     console.log('Password:', password);
 
     if (username && password) {
-      console.log('Sending Payload:', JSON.stringify({ username, password }));
       const response = await fetch('/api/users/signup', {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-
-     
   
+      const responseData = await response.json();
+
       if (response.ok) {
-        console.log(response);
-        document.location.replace('/homepage');
+        console.log(responseData);
+        alert('Sign-up successul!')
+        document.location.replace('/');
       } else {
-        alert(response.statusText);
+        alert(`Sign-up failed: ${responseData}` );
       }
     }
   };

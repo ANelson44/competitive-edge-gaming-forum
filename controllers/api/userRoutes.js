@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { User } = require("../../models");
-const withAuth = require("../../utils/auth");
-const bcrypt = require("bcrypt");
+const {withAuth} = require("../../utils/auth");
 
 //* Get all users
 router.get("/", async (req, res) => {
@@ -49,13 +48,11 @@ router.post("/signup", async (req, res) => {
         return res.status(400).json({ error: "Username already taken" });
       }
   
-      // Hash the password before saving it to the database
-      const hashedPassword = await bcrypt.hash(password, 10);
   
       // Create a new user
       const newUser = await User.create({
         username,
-        password: hashedPassword,
+        password
       });
   
       // Save user information in the session
@@ -97,10 +94,10 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ message: "Incorrect username or password, please try again" });
         }
 
-        const isPasswordValid = user.checkPassword(password)
+        const isPasswordValid = await user.checkPassword(password)
         // await bcrypt.compare(password, user.password);
         console.log('Entered password:', password);
         console.log('Hashed password from DB:', user.password);
@@ -108,17 +105,18 @@ router.post("/login", async (req, res) => {
 
         if (!isPasswordValid) {
             console.error("Invalid Password");
-            return res.status(401).json({ error: "Invalid Username or Password"});
+            return res.status(401).json({ message: "Incorrect email or password, please try again"});
         }
 
-        req.session.userId = user.id
-        // {
-        //     id: user.id,
-        //     username: user.username,
-        //     // password: user.password,
-        // };
+        req.session.save(() => {
+            req.session.user_id = user.id;
+            req.session.logged_in = true;
+            console.log('user logged in')
+            res.status(200).json({ message: "Login Successful", user });
+        });
+        
+       
 
-        return res.status(200).json({ message: "Login Successful", user });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal Server Error" });

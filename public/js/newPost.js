@@ -22,5 +22,8 @@ const newPostForm =async (event) => {
 
 //  query must match name
 
-document.querySelector('#newPostForm')
-.addEventListener('submit', newPostForm);
+const newPost = document.querySelector('#newPostForm');
+if (newPost) {
+    newPost.addEventListener('submit', newPostForm);
+}
+
