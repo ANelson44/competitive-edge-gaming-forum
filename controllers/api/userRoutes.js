@@ -94,16 +94,16 @@ router.delete("/:id", withAuth, async (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ where: { username } });
+        const userData = await User.findOne({ where: { username } });
 
-        if (!user) {
+        if (!userData) {
             return res.status(404).json({ message: "Incorrect username or password, please try again" });
         }
 
-        const isPasswordValid = user.checkPassword(password)
+        const isPasswordValid = await userData.checkPassword(password)
         // await bcrypt.compare(password, user.password);
         console.log('Entered password:', password);
-        console.log('Hashed password from DB:', user.password);
+        console.log('Hashed password from DB:', userData.password);
         console.log("isPasswordValid:", isPasswordValid);
 
         if (!isPasswordValid) {
@@ -112,14 +112,14 @@ router.post("/login", async (req, res) => {
         }
 
         req.session.save(() => {
-            req.session.userId = user.id;
+            req.session.userId = userData.id;
             req.session.logged_in = true;
 
         });
         
        
 
-        return res.status(200).json({ message: "Login Successful", user });
+        return res.status(200).json({ message: "Login Successful", user: userData });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal Server Error" });
