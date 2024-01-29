@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, inital-scale=1.0">
+        <title>Posts - {{ game:id }}</title>
+
+    </head>
+    <body>
+        <div class="container">
+            <h1>Posts - {{ game:id }}</h1>
+            {{#if posts.length}}
+            <div class="post-list">
+                {{#each posts}}
+                <div class="post">
+                    <h2>{{ title }}</h2>
+                    <p>{{ content }}</p>
+                    <p>Posted by {{ user.username }} on {{ formatDate createdAt }}</p>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <p>No posts available for this game.</p>
+            {{/if}}
+        </div>
+    </body>
+</html>
