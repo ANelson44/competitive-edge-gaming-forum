@@ -8,7 +8,7 @@ const withAuth = require("../utils/auth");
 // });
 
 //* Route to render homepage
-router.get('/homepage', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     // Find all games with associated names
 const gamesData = await Game.findAll({
@@ -26,7 +26,9 @@ const games = gamesData.map((game) => game.get({ plain: true }));
 router.get("/game/:id", withAuth, async (req, res) => {
   try {
     // Find game by ID with associated name and posts with associated usernames
-    const gameData = await Game.findByPk(req.params.id,); 
+    const gameData = await Game.findByPk(req.params.id, {
+      include: [{ model: Post, include: [User] }]
+    }); 
 
     // Convert game data to plain JavaScript object
     const game = gameData.get({ plain: true });
@@ -40,7 +42,7 @@ router.get("/game/:id", withAuth, async (req, res) => {
       const posts = postsData.map(post => post.get({ plain: true }));
 
       // Respond with JSON data (USED FOR INSOMNIA TESTING)
-      res.json({ game, posts });
+      // res.json({ game, posts });
 
       // Render game template with game data and posts data
       res.render("game", {
