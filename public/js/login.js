@@ -1,3 +1,4 @@
+console.log('login.js loaded');
 
 const loginFormHandler = async (event) => {
     event.preventDefault();

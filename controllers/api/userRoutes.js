@@ -91,16 +91,19 @@ router.delete("/:id", withAuth, async (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ where: { username } });
+        const userData = await User.findOne({ where: { username } });
 
-        if (!user) {
+        if (!userData) {
             return res.status(404).json({ message: "Incorrect username or password, please try again" });
         }
 
+
+
         const isPasswordValid = await user.checkPassword(password)
+
         // await bcrypt.compare(password, user.password);
         console.log('Entered password:', password);
-        console.log('Hashed password from DB:', user.password);
+        console.log('Hashed password from DB:', userData.password);
         console.log("isPasswordValid:", isPasswordValid);
 
         if (!isPasswordValid) {
@@ -109,13 +112,19 @@ router.post("/login", async (req, res) => {
         }
 
         req.session.save(() => {
+
+
             req.session.user_id = user.id;
+
             req.session.logged_in = true;
             console.log('user logged in')
             res.status(200).json({ message: "Login Successful", user });
         });
         
        
+
+
+
 
     } catch (err) {
         console.error(err);
