@@ -1,11 +1,17 @@
 <h1>{{game.name}}</h1>
 
-{{#each posts as |post|}}
-<div class="card">
-  <h5 class="card-header">Featured</h5>
-  <div class="card-body">
-    <h5 class="card-title" type="button">{{this.title}}</h5>
-    <p class="card-text">Posted by: {{this.User.username}}</p>
+
+  <a href="/newpost" class="btn btn-success">Create New Post</a>
+
+
+{{#each game.posts as |post|}}
+<a href="/post/{{post.id}}" class="card-link">
+  <div class="card bg-dark text-light">
+    <h5 class="card-header text-light">Featured</h5>
+    <div class="card-body">
+      <h5 class="card-title" type="button">{{post.title}}</h5>
+      <p class="card-text">Posted by: {{post.User.username}}</p>
+    </div>
   </div>
-</div>
+</a>
 {{/each}}

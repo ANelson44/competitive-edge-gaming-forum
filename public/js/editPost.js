@@ -19,4 +19,7 @@ const editPost = async (event) => {
     }
 };
 
-document.querySelector('.editForm').addEventListener('submit', editPost);
+const editPostButton = document.querySelector('.editForm');
+if (editPostButton) {
+    editPostButton.addEventListener('submit', editPost);
+}

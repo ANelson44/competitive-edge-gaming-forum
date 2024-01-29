@@ -12,11 +12,10 @@ router.get('/', async (req, res) => {
   try {
     // Find all games with associated names
 const gamesData = await Game.findAll({
-
 });
 
 const games = gamesData.map((game) => game.get({ plain: true }));
-  res.render('homepage', { games });
+  res.render('homepage', { logged_in: req.session.logged_in, games });
 } catch (err) {
   res.status(500).json(err);
 }
@@ -25,39 +24,56 @@ const games = gamesData.map((game) => game.get({ plain: true }));
 //* Route to render individual game page with all posts
 router.get("/game/:id", withAuth, async (req, res) => {
   try {
-    // Find game by ID with associated name and posts with associated usernames
-    const gameData = await Game.findByPk(req.params.id, {
-      include: [{ model: Post, include: [User] }]
-    }); 
+    // Find game by ID
+    const gameData = await Game.findByPk(req.params.id);
+
+    if (!gameData) {
+      return res.status(404).json({ error: 'Game not found' });
+    }
 
     // Convert game data to plain JavaScript object
     const game = gameData.get({ plain: true });
 
     try {
+      // Find posts for the game
       const postsData = await Post.findAll({
         where: { gameId: req.params.id },
-        include: [{ model: User, attributes: ['username'] }],
       });
 
+      // Map posts data to plain JavaScript objects
       const posts = postsData.map(post => post.get({ plain: true }));
 
-      // Respond with JSON data (USED FOR INSOMNIA TESTING)
-      // res.json({ game, posts });
+      // Find users for the posts
+      const userIds = posts.map(post => post.userId);
+      const usersData = await User.findAll({
+        where: { id: userIds },
+        attributes: ['id', 'username'],
+      });
+
+      // Map users data to plain JavaScript objects
+      const users = usersData.map(user => user.get({ plain: true }));
+
+      // Attach users to posts based on userId
+      posts.forEach(post => {
+        post.User = users.find(user => user.id === post.userId);
+      });
+
+      // Attach posts array to game
+      game.posts = posts;
 
       // Render game template with game data and posts data
       res.render("game", {
         game,
-        posts,
       });
     } catch (err) {
       // If there is an error, return 500 status code and error message
-      console.log(err);
-      res.status(500).json(err);
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
   } catch (err) {
     // If there is an error, return 500 status code and error message
-    console.log(err);
-    res.status(500).json(err);
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -81,12 +97,12 @@ router.get("/post/:id", withAuth, async (req, res) => {
     const post = postData.get({ plain: true });
 
      // Respond with JSON data (FOR INSOMNIA TESTING)
-     res.json({ post });
+    //  res.json({ post });
 
     // Render post template with post data
-    // res.render("post", {
-    //   post,
-    // });
+    res.render("post", {
+      post,
+    });
   } catch (err) {
     // If there is an error, return 500 status code and error message
     console.error(err);
@@ -97,7 +113,7 @@ router.get("/post/:id", withAuth, async (req, res) => {
 //* router to render signup page
 router.get("/signup", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/homepage");
+    res.redirect("/");
     return;
   }
   res.render("signup");
@@ -106,7 +122,7 @@ router.get("/signup", (req, res) => {
 //* Route to render login page
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/homepage");
+    res.redirect("/");
     return;
   }
   res.render("login");

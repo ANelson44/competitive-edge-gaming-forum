@@ -13,8 +13,10 @@ const loginFormHandler = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
   
+      console.log('Response Status:', response.status);
+
       if (response.ok) {
-        document.location.replace('/homepage');
+        document.location.replace('/');
       } else {
         alert(response.statusText);
       }
@@ -22,6 +24,8 @@ const loginFormHandler = async (event) => {
   };
   // stops page from reloading
   
-  document
-    .querySelector('.login-form')
-    .addEventListener('submit', loginFormHandler);
+  const loginForm = document.querySelector('.login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', loginFormHandler);
+    }
+    

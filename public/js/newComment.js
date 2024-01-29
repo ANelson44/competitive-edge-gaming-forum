@@ -1,3 +1,8 @@
+const showCommentForm = () => {
+    const commentFormContainer = document.getElementById('commentFormContainer');
+    commentFormContainer.style.display = 'block';
+};
+
 const newCommentForm = async (event) => {
     event.preventDefault();
 
@@ -5,7 +10,7 @@ const newCommentForm = async (event) => {
     const comment = document.querySelector('#newComment').value;
 
     if (comment) {
-        const response = await fetch('/api/Comment', {
+        const response = await fetch('/api/comment', {
             method: 'POST',
             body: JSON.stringify({
                 comment: comment,
@@ -15,11 +20,19 @@ const newCommentForm = async (event) => {
         });
 
         if (response.ok) {
-            dovument.location.replace('/homepage')
+            document.location.reload(); // Fixed typo here
         } else {
             alert('Failed to make a new comment.')
         }
     }
 }
 
-document.querySelector('#commentForm').addEventListener('submit', newCommentForm);
+const newCommentButton = document.querySelector('#addCommentButton'); // Check the ID in your HTML
+if (newCommentButton) {
+    newCommentButton.addEventListener('click', showCommentForm);
+}
+
+const newComment = document.querySelector('#commentForm');
+if (newComment) {
+    newComment.addEventListener('submit', newCommentForm);
+}

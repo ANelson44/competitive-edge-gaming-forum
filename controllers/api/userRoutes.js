@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ message: "Incorrect username or password, please try again" });
         }
 
         const isPasswordValid = user.checkPassword(password)
@@ -108,15 +108,16 @@ router.post("/login", async (req, res) => {
 
         if (!isPasswordValid) {
             console.error("Invalid Password");
-            return res.status(401).json({ error: "Invalid Username or Password"});
+            return res.status(401).json({ message: "Incorrect email or password, please try again"});
         }
 
-        req.session.userId = user.id
-        // {
-        //     id: user.id,
-        //     username: user.username,
-        //     // password: user.password,
-        // };
+        req.session.save(() => {
+            req.session.userId = user.id;
+            req.session.logged_in = true;
+
+        });
+        
+       
 
         return res.status(200).json({ message: "Login Successful", user });
     } catch (err) {
