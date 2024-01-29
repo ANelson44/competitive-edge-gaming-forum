@@ -31,6 +31,7 @@
             <li class="nav-item">
               <a class="nav-link text-light" href="/game/4">GAME FORUMS</a>
             </li>
+            {{log logged_in}}
             {{#if logged_in}}
                 <li class='nav-item'>
                   <a class='nav-link text-light' href='#' id='logout'>LOGOUT</a>
@@ -62,6 +63,7 @@
   <script src="/public/js/editPost.js"></script>
   <script src="/public/js/deletePost.js"></script>
   <script src="/public/js/newComment.js"></script>
+  <script src="/public/js/signup.js"></script>
   <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

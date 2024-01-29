@@ -1,3 +1,5 @@
+console.log('signup file loaded')
+
 const signupFormHandler = async (event) => {
     event.preventDefault();
   
