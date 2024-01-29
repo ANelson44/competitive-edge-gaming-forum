@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Post, User } = require("../../models");
-const withAuth = require("../../utils/auth");
+const {withAuth} = require("../../utils/auth");
 
 //* Get all posts by username
 router.get("/", async (req, res) => {
@@ -35,14 +35,14 @@ router.get("/:id", async (req, res) => {
 //* Create post
 router.post("/", withAuth, async (req, res) => {
   // Check if the user is logged in
-  if (!req.session.userId) {
+  if (!req.session.user_id) {
     return res.status(401).json({ error: "User not logged in" });
   }
 
   try {
     const newPost = await Post.create({
       ...req.body,
-      userId: req.session.userId,
+      userId: req.session.user_id,
     });
 
     const io = req.app.get('io');
@@ -81,7 +81,7 @@ router.delete("/:id", withAuth, async (req, res) => {
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
-        userId: req.session.userId,
+        userId: req.session.user_id,
       },
     });
 

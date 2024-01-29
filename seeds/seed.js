@@ -26,6 +26,7 @@ const seedAllGames = async () => {
     await seedValorant();
 
     console.log('All games seeded successfully');
+    process.exit(0);
 }
 
 seedAllGames();

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Game, User, Post, Genre, Comment } = require('../models');
-const withAuth = require("../utils/auth");
+const {withPostAuth} = require("../utils/auth");
 
 // //* Route to render Main page
 // router.get('/', (req, res) => {
@@ -15,6 +15,7 @@ const gamesData = await Game.findAll({
 });
 
 const games = gamesData.map((game) => game.get({ plain: true }));
+console.log("logged in: ", req.session.logged_in);
   res.render('homepage', { logged_in: req.session.logged_in, games });
 } catch (err) {
   res.status(500).json(err);
@@ -22,7 +23,7 @@ const games = gamesData.map((game) => game.get({ plain: true }));
 });
 
 //* Route to render individual game page with all posts
-router.get("/game/:id", withAuth, async (req, res) => {
+router.get("/game/:id", withPostAuth, async (req, res) => {
   try {
     // Find game by ID
     const gameData = await Game.findByPk(req.params.id);
@@ -64,6 +65,7 @@ router.get("/game/:id", withAuth, async (req, res) => {
       // Render game template with game data and posts data
       res.render("game", {
         game,
+        logged_in: req.session.logged_in
       });
     } catch (err) {
       // If there is an error, return 500 status code and error message
@@ -78,7 +80,7 @@ router.get("/game/:id", withAuth, async (req, res) => {
 });
 
 //* Route to render individual post page with all comments
-router.get("/post/:id", withAuth, async (req, res) => {
+router.get("/post/:id", withPostAuth, async (req, res) => {
   try {
     // Find post by ID with associated user and comments with associated usernames
     const postData = await Post.findByPk(req.params.id, {
@@ -102,6 +104,7 @@ router.get("/post/:id", withAuth, async (req, res) => {
     // Render post template with post data
     res.render("post", {
       post,
+      logged_in : req.session.logged_in
     });
   } catch (err) {
     // If there is an error, return 500 status code and error message
@@ -113,6 +116,7 @@ router.get("/post/:id", withAuth, async (req, res) => {
 //* router to render signup page
 router.get("/signup", (req, res) => {
   if (req.session.logged_in) {
+    console.log("logged in: ", req.session.logged_in);
     res.redirect("/");
     return;
   }
@@ -122,6 +126,7 @@ router.get("/signup", (req, res) => {
 //* Route to render login page
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
+    console.log("logged in: ", req.session.logged_in);
     res.redirect("/");
     return;
   }
