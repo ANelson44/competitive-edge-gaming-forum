@@ -46,7 +46,13 @@ Some of our goals for future development are but not limited to:
 
 ## Screenshot
 
+![Alt text](<project-2 screenshot.png>)
+
 ## Link
+
+- Heroku Link: https://competitive-edge-gaming-forum-86d3860bf3dd.herokuapp.com/
+
+- Github Link: https://github.com/ANelson44/competitive-edge-gaming-forum
 
 ## Sources
 
